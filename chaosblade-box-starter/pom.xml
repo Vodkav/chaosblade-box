@@ -60,7 +60,7 @@
     </dependencies>
 
     <build>
-        <finalName>chaosblade-box-${version}</finalName>
+        <finalName>vb-chaos-box-${version}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

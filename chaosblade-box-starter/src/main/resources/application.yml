@@ -2,7 +2,7 @@ chaos:
   agent:
     helm: https://chaosblade.oss-cn-hangzhou.aliyuncs.com/platform/release/${chaos.agent.version}/chaosblade-box-agent-${chaos.agent.version}.tgz
     repository: chaosbladeio/chaosblade-agent
-    url: https://chaosblade.oss-cn-hangzhou.aliyuncs.com/platform/release/${chaos.agent.version}/chaosagent.tar.gz
+    url: http://9.134.116.161/file/${chaos.agent.version}/chaosagent.tar.gz
     version: 1.0.2
   cache:
     auto-sync: true
@@ -77,7 +77,7 @@ spring:
     data: classpath:sql/data/*.sql
     driver-class-name: com.mysql.jdbc.Driver
     initialization-mode: always
-    initialize: true
+    initialize: false
     password: 123456
     schema: classpath:sql/schema/chaosblade-box-ddl.sql
     type: com.zaxxer.hikari.HikariDataSource
