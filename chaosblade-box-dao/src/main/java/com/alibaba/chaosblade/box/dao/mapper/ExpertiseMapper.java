@@ -24,10 +24,10 @@ public interface ExpertiseMapper extends BaseMapper<ExpertiseDO> {
         "AND mkt.name like #{query.partName} " +
         "</if>" + "AND" +
         "(" +
-        "<if test='null != query.userId and query.userId != \"\" '>" +
-        " mkt.user_id = #{query.userId} " +
-        "</if>" +
-        "And mkt.type = 1 or mkt.type=0"
+//        "<if test='null != query.userId and query.userId != \"\" '>" +
+//        " mkt.user_id = #{query.userId} " +
+//        "</if>" +
+        "mkt.type = 1 or mkt.type=0"
         + ")"
         +
         "<if test='null != query.state '>" +

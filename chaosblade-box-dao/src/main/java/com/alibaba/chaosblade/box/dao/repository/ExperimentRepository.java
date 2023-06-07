@@ -69,7 +69,7 @@ public class ExperimentRepository implements IRepository<String, ExperimentDO>, 
 
     public boolean existByUserIdAndExperimentId(ChaosUser user, String experimentId) {
         QueryWrapper<ExperimentDO> queryWrapper = new QueryWrapper<>();
-        appendUser(queryWrapper, user);
+//        appendUser(queryWrapper, user);
         queryWrapper.eq("experiment_id", experimentId);
         return experimentMapper.selectCount(queryWrapper) > 0;
     }
@@ -122,7 +122,7 @@ public class ExperimentRepository implements IRepository<String, ExperimentDO>, 
 
     private QueryWrapper<ExperimentDO> buildExperimentQueryWrapper(ExperimentQuery query) {
         QueryWrapper<ExperimentDO> queryWrapper = new QueryWrapper<>();
-        appendUser(queryWrapper, query.getUser());
+//        appendUser(queryWrapper, query.getUser());
 
         queryWrapper.eq(!Strings.isNullOrEmpty(query.getNamespace()), "namespace", query.getNamespace())
             .eq(null != query.getState(), "state", ExperimentStateEnum.getValue(query.getState()))

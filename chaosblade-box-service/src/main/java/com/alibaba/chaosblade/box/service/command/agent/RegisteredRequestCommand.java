@@ -48,8 +48,9 @@ public class RegisteredRequestCommand
                 return Response.ofFailure(Response.Code.Parameter_Empty, "license Required");
             }
             // 2. get userId by license
-            String userId = userApplicationRegister.getUserId(registeredCallbackRequest.getUserId(), registeredCallbackRequest.getAk());
-            if (Strings.isNullOrEmpty(userId)){
+//            String userId = userApplicationRegister.getUserId(registeredCallbackRequest.getUserId(), registeredCallbackRequest.getAk());
+          String userId = registeredCallbackRequest.getAk();
+          if (Strings.isNullOrEmpty(userId)){
                 return Response.ofFailure(Response.Code.Parameter_Empty, "uid illegal");
             }
             registeredCallbackRequest.setUserId(userId);

@@ -124,7 +124,7 @@ public class ScopeController extends BaseController {
             return RestResponseUtil.failed(ChaosError.withCode(CommonErrorCode.B_ERR_UNKNOWN_SCOPE_TYPE));
         }
         CloudDeviceQuery query = new CloudDeviceQuery();
-        query.setUserId(user.getUserId());
+//        query.setUserId(user.getUserId());
         query.setNamespace(namespace);
         query.setScopeType(scopeTypeEnum);
         query.setKey(cloudUserScopeRequest.getKey());

@@ -41,9 +41,9 @@ public interface ExperimentMapper extends BaseMapper<ExperimentDO> {
             "mke.gmt_create," +
             "mke.gmt_modified " +
             "from t_chaos_experiment mke WHERE 1=1 " +
-            "<if test='null != query.userId and query.userId != \"\" '>" +
-                "AND mke.user_id = #{query.userId} " +
-            "</if>" +
+//            "<if test='null != query.userId and query.userId != \"\" '>" +
+//                "AND mke.user_id = #{query.userId} " +
+//            "</if>" +
             "<if test='null != query.namespace and query.namespace != \"\" '>" +
                 "AND mke.namespace = #{query.namespace} " +
             "</if>" +
@@ -92,8 +92,8 @@ public interface ExperimentMapper extends BaseMapper<ExperimentDO> {
                 " AND mke.experiment_id IN " +
                 "(select sj.business_id from t_chaos_scheduler_job sj where " +
                     " cron_expression != \"\" " +
-                    " and " +
-                    " sj.user_id = #{query.userId} " +
+//                    " and " +
+//                    " sj.user_id = #{query.userId} " +
                         "AND sj.enabled = 1 " +
                 ")" +
             "</if>" +

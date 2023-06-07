@@ -144,7 +144,7 @@ public class ApplicationRepository implements IRepository<Long, ApplicationDO> {
 	public IPage<ApplicationDO> findApplicationsByUserId(String userId, String namespace, boolean filterDisabled,
 		int page, int size) {
 		QueryWrapper<ApplicationDO> queryWrapper = new QueryWrapper<>();
-		queryWrapper.eq("user_id", userId);
+//		queryWrapper.eq("user_id", userId);
 		queryWrapper.eq("namespace", namespace);
 		if (filterDisabled) {
 			queryWrapper.eq("disabled", false);

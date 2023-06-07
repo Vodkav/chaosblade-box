@@ -25,10 +25,11 @@ public class LicenseRepository {
 
     public Optional<UserDo> getUserLicense(String userId) {
         if (!Strings.isNullOrEmpty(userId)) {
-            QueryWrapper<UserDo> queryWrapper = new QueryWrapper<UserDo>()
-                .eq("user_id", userId)
-                .eq("is_deleted", NOT_DELETE_FLAG);
-            return Optional.ofNullable(userMapper.selectOne(queryWrapper));
+//            QueryWrapper<UserDo> queryWrapper = new QueryWrapper<UserDo>()
+//                .eq("user_id", userId)
+//                .eq("is_deleted", NOT_DELETE_FLAG);
+//            return Optional.ofNullable(userMapper.selectOne(queryWrapper));
+            return Optional.of(UserDo.vbUser(userId));
         }
         return Optional.empty();
     }

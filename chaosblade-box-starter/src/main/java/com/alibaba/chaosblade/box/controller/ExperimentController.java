@@ -115,6 +115,7 @@ public class ExperimentController extends BaseController {
 	@PostMapping(value = "/QueryExperiment")
 	public RestResponse<ExperimentInfo> queryExperiment(@LoginUser ChaosUser chaosUser,
 														@RequestBody BaseExperimentRequest baseExperimentRequest) throws PermissionDeniedException {
+		log.info("userid:{},username:{}", chaosUser.getUserId(), chaosUser.getUserName());
 		PermissionResult permission = userPermissionService.checkExperimentPermission(PermissionTypes.R, chaosUser,
 			baseExperimentRequest.getExperimentId(), baseExperimentRequest.getNamespace(), null);
 		Response<ExperimentInfo> experimentInfoResponse = experimentReadService.getExperiment(baseExperimentRequest);

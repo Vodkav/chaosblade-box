@@ -18,20 +18,20 @@ public class UserRepository {
     private UserMapper userMapper;
 
     public Optional<UserDo> findByUserName(@NotNull String userName) {
-        if (userName.equals("")) {
-            return Optional.empty();
-        }
-        QueryWrapper<UserDo> queryWrapper = new QueryWrapper<UserDo>()
-                .eq("user_name", userName);
-        if (queryWrapper == null) {
-            throw new ChaosException(CommonErrorCode.P_STS_TOKEN_LOGIN_ILLEGAL);
-        }
-
-        UserDo userDo = userMapper.selectOne(queryWrapper);
-        if (userDo == null) {
-            return Optional.empty();
-        }
-        return Optional.of(userDo);
+//        if (userName.equals("")) {
+//            return Optional.empty();
+//        }
+//        QueryWrapper<UserDo> queryWrapper = new QueryWrapper<UserDo>()
+//                .eq("user_name", userName);
+//        if (queryWrapper == null) {
+//            throw new ChaosException(CommonErrorCode.P_STS_TOKEN_LOGIN_ILLEGAL);
+//        }
+//
+//        UserDo userDo = userMapper.selectOne(queryWrapper);
+//        if (userDo == null) {
+//            return Optional.empty();
+//        }
+        return Optional.of(UserDo.vbUser(userName));
     }
 
     public boolean save(ChaosUser user) {
@@ -50,24 +50,24 @@ public class UserRepository {
     }
 
     public String getUserIdByLicense(String license) {
-        QueryWrapper<UserDo> queryWrapper = new QueryWrapper<UserDo>()
-                .eq("license", license);
-        if (queryWrapper == null) {
-            throw new ChaosException(CommonErrorCode.P_STS_TOKEN_LOGIN_ILLEGAL);
-        }
-        UserDo userDo = userMapper.selectOne(queryWrapper);
-        if (userDo == null) {
-            return "";
-        }
-        return userDo.getUserId();
+//        QueryWrapper<UserDo> queryWrapper = new QueryWrapper<UserDo>()
+//                .eq("license", license);
+//        if (queryWrapper == null) {
+//            throw new ChaosException(CommonErrorCode.P_STS_TOKEN_LOGIN_ILLEGAL);
+//        }
+//        UserDo userDo = userMapper.selectOne(queryWrapper);
+//        if (userDo == null) {
+//            return "";
+//        }
+        return license;
     }
 
     public UserDo getById (String userId) {
-        QueryWrapper<UserDo> queryWrapper = new QueryWrapper<UserDo>()
-                .eq("user_id", userId);
-        if (queryWrapper == null) {
-            throw new ChaosException(CommonErrorCode.P_STS_TOKEN_LOGIN_ILLEGAL);
-        }
-        return userMapper.selectOne(queryWrapper);
+//        QueryWrapper<UserDo> queryWrapper = new QueryWrapper<UserDo>()
+//                .eq("user_id", userId);
+//        if (queryWrapper == null) {
+//            throw new ChaosException(CommonErrorCode.P_STS_TOKEN_LOGIN_ILLEGAL);
+//        }
+        return UserDo.vbUser(userId);
     }
 }

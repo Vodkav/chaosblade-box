@@ -16,6 +16,7 @@
 
 package com.alibaba.chaosblade.box.config;
 
+import com.alibaba.chaosblade.box.common.common.domain.user.ChaosUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.web.context.request.RequestAttributes;
@@ -23,6 +24,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -34,6 +36,21 @@ public class AttachRequestIdInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null){
+          for (Cookie cookie : cookies){
+            String name = cookie.getName();
+            String value = cookie.getValue();
+            if (name.equalsIgnoreCase("kong_user_name")){
+              ChaosUser user = new ChaosUser();
+              user.setUserName(value);
+              user.setUserId(value);
+              user.setPassword(value);
+              user.setLicense(value);
+              request.setAttribute("CURRENT_USER", user);
+            }
+          }
+        }
         return true;
     }
 

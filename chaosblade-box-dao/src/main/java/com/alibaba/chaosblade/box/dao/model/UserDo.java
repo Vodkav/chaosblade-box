@@ -23,4 +23,14 @@ public class UserDo extends BaseDO {
     private String secretKey;
 
     private int isDeleted;
+
+    public static UserDo vbUser(String s){
+      UserDo userDo = new UserDo();
+      userDo.setUserId(s);
+      userDo.setUserName(s);
+      userDo.setUserPassword(s);
+      userDo.setLicense(s);
+      userDo.setSecretKey(s);
+      return userDo;
+    }
 }

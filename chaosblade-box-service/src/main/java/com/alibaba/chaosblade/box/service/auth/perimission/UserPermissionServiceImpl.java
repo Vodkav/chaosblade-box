@@ -29,7 +29,11 @@ public class UserPermissionServiceImpl extends AbstractUserPermissionService {
     @Override
     public void checkExperimentDeletePermission(int permissionType, ChaosUser chaosUser, String experimentId,
                                                 String nameSpace, List<Host> hosts) throws PermissionDeniedException {
+        PermissionResult permissionResult = getUserExperimentPermission(chaosUser, experimentId, nameSpace);
+        if (!permissionResult.contains(permissionType)) {
+            throw new PermissionDeniedException(CommonErrorCode.P_USER_PERMISSION_DENIED, CommonErrorCode.P_USER_PERMISSION_DENIED.getFullMessage());
 
+        }
     }
 
     @Override

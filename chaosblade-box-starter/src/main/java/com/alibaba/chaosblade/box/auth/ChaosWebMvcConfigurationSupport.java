@@ -1,5 +1,6 @@
 package com.alibaba.chaosblade.box.auth;
 
+import com.alibaba.chaosblade.box.config.AttachRequestIdInterceptor;
 import com.alibaba.chaosblade.box.filter.CrossFilter;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
@@ -12,6 +13,7 @@ import org.springframework.core.Ordered;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
@@ -27,11 +29,39 @@ import java.util.List;
 @Slf4j
 @Configuration
 public class ChaosWebMvcConfigurationSupport extends WebMvcConfigurationSupport {
+
+    /**
+     * 登录校验拦截器
+     *
+     * @return
+     */
+    @Bean
+    public AttachRequestIdInterceptor loginRequiredInterceptor() {
+        return new AttachRequestIdInterceptor();
+    }
+
+    /**
+     * CurrentUser 注解参数解析器
+     *
+     * @return
+     */
+    @Bean
+    public UserWebArgumentResolver currentUserMethodArgumentResolver() {
+        return new UserWebArgumentResolver();
+    }
     @Override
     protected void addResourceHandlers(ResourceHandlerRegistry registry) {
         super.addResourceHandlers(registry);
         registry.addResourceHandler("/index.bundle.js", "*.js", "*.css", "*.html", "*.ico", "*.png", "*.jpg", "*.gif", "*.svg")
             .addResourceLocations("classpath:/build/");
+    }
+
+    @Override
+    protected void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(loginRequiredInterceptor())
+                .addPathPatterns("/chaos" + "/**")
+                .excludePathPatterns("/chaos" + "/UserLogin");
+        super.addInterceptors(registry);
     }
 
     @Override
@@ -43,8 +73,8 @@ public class ChaosWebMvcConfigurationSupport extends WebMvcConfigurationSupport 
 
     @Override
     protected void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-        LoginUserResolver loginUserResolver = getApplicationContext().getBean(LoginUserResolver.class);
-        argumentResolvers.add(new UserWebArgumentResolver(loginUserResolver));
+        argumentResolvers.add(currentUserMethodArgumentResolver());
+        super.addArgumentResolvers(argumentResolvers);
     }
 
     @Bean

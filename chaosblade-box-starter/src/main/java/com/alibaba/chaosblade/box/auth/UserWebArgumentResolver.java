@@ -7,6 +7,7 @@ import com.alibaba.chaosblade.box.common.infrastructure.ChaosRequestContextHolde
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
+import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
@@ -21,15 +22,18 @@ import java.util.function.Consumer;
  */
 public class UserWebArgumentResolver implements HandlerMethodArgumentResolver {
 
-    private LoginUserResolver loginUserResolver;
+//    private LoginUserResolver loginUserResolver;
 
-    public UserWebArgumentResolver(LoginUserResolver loginUserResolver) {
-        this.loginUserResolver = loginUserResolver;
-    }
+//    private VbLoginUserResolver vbLoginUserResolver;
+
+//    public UserWebArgumentResolver(VbLoginUserResolver vbLoginUserResolver) {
+//        this.vbLoginUserResolver = vbLoginUserResolver;
+//    }
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        return existAnnoation(parameter) != null;
+        return parameter.getParameterType().isAssignableFrom(ChaosUser.class)
+                && parameter.hasParameterAnnotation(LoginUser.class);
     }
 
     private LoginUser existAnnoation(MethodParameter methodParameter) {
@@ -45,13 +49,6 @@ public class UserWebArgumentResolver implements HandlerMethodArgumentResolver {
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
         NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
-        ChaosUser chaosUser = loginUserResolver.resolve((HttpServletRequest)webRequest.getNativeRequest());
-        ChaosRequestContextHolder.getApplicationContext().ifPresent(new Consumer<ChaosApplicationContext>() {
-            @Override
-            public void accept(ChaosApplicationContext chaosApplicationContext) {
-                chaosApplicationContext.setLoginUser(chaosUser);
-            }
-        });
-        return chaosUser;
+        return (ChaosUser) webRequest.getAttribute("CURRENT_USER", RequestAttributes.SCOPE_REQUEST);
     }
 }

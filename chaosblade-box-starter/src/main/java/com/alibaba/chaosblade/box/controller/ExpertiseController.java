@@ -188,10 +188,10 @@ public class ExpertiseController extends BaseController {
 
     @PostMapping(value = "PageableQueryExpertise")
     public RestResponse<PageQueryResponse<AdminExpertiseView>> pageableQueryExpertise(@LoginUser ChaosUser loginUser,
-                                                                                      @RequestBody ExpertiseSearchRequest expertiseCloneRequest) {
-        expertiseCloneRequest.setUser(loginUser);
+                                                                                      @RequestBody ExpertiseSearchRequest expertiseSearchRequest) {
+        expertiseSearchRequest.setUser(loginUser);
         return RestResponseUtil.initWithServiceResponse(
-            expertiseService.listExpertise(expertiseCloneRequest));
+            expertiseService.listExpertise(expertiseSearchRequest));
     }
 }
 

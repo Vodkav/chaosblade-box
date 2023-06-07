@@ -7,6 +7,9 @@ import com.alibaba.chaosblade.box.common.common.domain.user.ChaosUser;
 import com.alibaba.chaosblade.box.model.RestResponseUtil;
 import com.alibaba.chaosblade.box.service.model.RestResponse;
 import com.alibaba.chaosblade.box.service.model.overview.*;
+import groovy.util.logging.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,13 +23,17 @@ import java.util.List;
  *
  */
 @RestController
+@Slf4j
 public class OverviewController extends BaseController {
+
+    private static Logger logger = LoggerFactory.getLogger("UserLogTest");
 
     @Resource
     private OverviewService overviewService;
 
     @PostMapping("UserExperimentOverviewInfo")
     public RestResponse<OverviewExperimentCount> userExperimentOverviewInfo(@LoginUser ChaosUser chaosUser, @RequestBody OverviewRequest overviewRequest) {
+        logger.info(chaosUser.getUserName());
         overviewRequest.setUser(chaosUser);
         return RestResponseUtil.initWithServiceResponse(overviewService.getUserExperimentCount(overviewRequest));
     }
